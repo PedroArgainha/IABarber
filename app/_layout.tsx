@@ -30,7 +30,6 @@ export default function RootLayout() {
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="about" />
-        <Stack.Screen name="barbearia" />
         <Stack.Screen name="app/index" />
         <Stack.Screen name="app/style" />
         <Stack.Screen name="app/loading" />

@@ -5,7 +5,6 @@ import { isWeb, MAX_WIDTH } from '../constants/responsive';
 
 const LINKS = [
   { label: 'Como funciona', href: '/' },
-  { label: 'A Barbearia', href: '/barbearia' },
   { label: 'Sobre nós', href: '/about' },
 ];
 

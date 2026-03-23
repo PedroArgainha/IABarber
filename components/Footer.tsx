@@ -15,7 +15,6 @@ export default function Footer() {
           <View style={s.links}>
             {[
               { label: 'Como funciona', href: '/' },
-              { label: 'A Barbearia', href: '/barbearia' },
               { label: 'Sobre nós', href: '/about' },
             ].map((l) => (
               <TouchableOpacity key={l.href} onPress={() => router.push(l.href as any)}>

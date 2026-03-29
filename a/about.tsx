@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONTS, RADIUS } from '../constants/theme';
 import { isWeb, MAX_WIDTH } from '../constants/responsive';
+import { useResponsive } from '../constants/responsive';
 import WebNav from '../components/WebNav';
 import Footer from '../components/Footer';
 
@@ -21,6 +22,12 @@ const SOCIALS = [
 
 export default function About() {
   const router = useRouter();
+  const { isMobile, isTablet, isDesktop, px } = useResponsive();
+
+  const sectionPadV = isMobile ? 48 : 100;
+  const innerStyle = isWeb
+    ? { maxWidth: MAX_WIDTH, width: '100%' as any, marginHorizontal: 'auto' as any, paddingHorizontal: px }
+    : { paddingHorizontal: 24 };
 
   return (
     <View style={s.root}>
@@ -36,25 +43,25 @@ export default function About() {
         )}
 
         {/* HERO */}
-        <View style={[s.hero, isWeb && s.heroWeb]}>
+        <View style={[s.hero, { paddingVertical: isMobile ? 40 : 120 }]}>
           <LinearGradient colors={['rgba(181,245,66,0.06)', 'transparent']} style={StyleSheet.absoluteFill} />
-          <View style={isWeb ? s.webInner : s.mobileInner}>
+          <View style={innerStyle}>
             <Text style={s.eyebrow}>A nossa história</Text>
-            <Text style={[s.heroTitle, isWeb && s.heroTitleWeb]}>
+            <Text style={[s.heroTitle, { fontSize: isMobile ? 32 : isTablet ? 48 : 60, lineHeight: isMobile ? 40 : isTablet ? 56 : 68 }]}>
               Criado por quem{'\n'}<Text style={s.accent}>vive na barbearia.</Text>
             </Text>
-            <Text style={[s.heroSub, isWeb && s.heroSubWeb]}>
+            <Text style={[s.heroSub, { fontSize: isMobile ? 15 : 18 }]}>
               A 777 HairVision nasceu de uma frustração real — chegar ao barbeiro, pedir um corte, e receber algo completamente diferente do que imaginaste.
             </Text>
           </View>
         </View>
 
         {/* FOUNDER */}
-        <View style={[s.section, isWeb && s.sectionWeb]}>
-          <View style={[isWeb ? s.webInner : s.mobileInner, isWeb && s.founderGrid]}>
+        <View style={{ paddingVertical: sectionPadV }}>
+          <View style={[innerStyle, isDesktop && { flexDirection: 'row', gap: 80, alignItems: 'flex-start' }]}>
 
             {/* Card */}
-            <View style={[s.founderCard, isWeb && s.founderCardWeb]}>
+            <View style={[s.founderCard, isDesktop && { width: 360 }]}>
               <View style={s.avatarWrap}>
                 <View style={s.avatar}><Text style={{ fontSize: 56 }}>👤</Text></View>
                 <View style={s.avatarBadge}><Text style={s.avatarBadgeText}>Founder & CEO</Text></View>
@@ -78,9 +85,11 @@ export default function About() {
             </View>
 
             {/* Bio */}
-            <View style={[s.founderBio, isWeb && s.founderBioWeb]}>
+            <View style={[isDesktop && { flex: 1 }, !isDesktop && { marginTop: 32 }]}>
               <Text style={s.eyebrow}>O fundador</Text>
-              <Text style={[s.bioTitle, isWeb && s.bioTitleWeb]}>Uma ideia simples que resolveu um problema real.</Text>
+              <Text style={[s.bioTitle, { fontSize: isMobile ? 24 : 34, lineHeight: isMobile ? 32 : 42 }]}>
+                Uma ideia simples que resolveu um problema real.
+              </Text>
               <Text style={s.bioText}>Passei anos a ir ao barbeiro sem saber exatamente o que queria — ou pior, sem conseguir comunicar o que tinha na cabeça. Mostrava uma foto, dizia <Text style={s.bioStrong}>"quero assim"</Text>, e saía com algo completamente diferente.</Text>
               <View style={s.quoteBlock}>
                 <Text style={s.quoteText}>"Depois de uma vez mais uma decepção, pensei: tem de haver uma forma melhor de fazer isto."</Text>
@@ -92,14 +101,14 @@ export default function About() {
         </View>
 
         {/* MISSION */}
-        <View style={[s.section, s.missionSection, isWeb && s.sectionWeb]}>
-          <View style={[isWeb ? s.webInner : s.mobileInner, isWeb && s.missionGrid]}>
-            <View style={isWeb && { flex: 1 }}>
+        <View style={[s.missionSection, { paddingVertical: sectionPadV }]}>
+          <View style={[innerStyle, isDesktop && { flexDirection: 'row', gap: 80, alignItems: 'center' }]}>
+            <View style={isDesktop ? { flex: 1 } : {}}>
               <Text style={s.eyebrow}>A nossa missão</Text>
-              <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>Acabar com as surpresas na cadeira do barbeiro.</Text>
+              <Text style={[s.sectionTitle, { fontSize: isMobile ? 26 : 40 }]}>Acabar com as surpresas na cadeira do barbeiro.</Text>
               <Text style={s.sectionSub}>Acreditamos que cada pessoa merece chegar ao barbeiro com confiança — sabendo exatamente o que quer e como vai ficar.</Text>
             </View>
-            <View style={[s.missionNums, isWeb && { flex: 1 }]}>
+            <View style={[s.missionNums, isDesktop ? { flex: 1 } : { marginTop: 24 }]}>
               {[['10K+', 'Utilizadores'], ['50K+', 'Looks gerados'], ['4.9★', 'Avaliação'], ['<10s', 'Resposta IA']].map(([n, l]) => (
                 <View key={n} style={s.missionNumCard}>
                   <Text style={s.missionNum}>{n}</Text>
@@ -111,13 +120,13 @@ export default function About() {
         </View>
 
         {/* VALUES */}
-        <View style={[s.section, isWeb && s.sectionWeb]}>
-          <View style={isWeb ? s.webInner : s.mobileInner}>
+        <View style={{ paddingVertical: sectionPadV }}>
+          <View style={innerStyle}>
             <Text style={s.eyebrow}>Os nossos valores</Text>
-            <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>O que nos guia todos os dias.</Text>
-            <View style={[s.valuesGrid, isWeb && s.valuesGridWeb]}>
+            <Text style={[s.sectionTitle, { fontSize: isMobile ? 26 : 40 }]}>O que nos guia todos os dias.</Text>
+            <View style={[s.valuesGrid, !isMobile && s.valuesGridWeb]}>
               {VALUES.map((v) => (
-                <View key={v.title} style={[s.valueCard, isWeb && s.valueCardWeb]}>
+                <View key={v.title} style={[s.valueCard, !isMobile && s.valueCardWeb]}>
                   <Text style={s.valueIcon}>{v.icon}</Text>
                   <Text style={s.valueTitle}>{v.title}</Text>
                   <Text style={s.valueDesc}>{v.desc}</Text>
@@ -128,11 +137,11 @@ export default function About() {
         </View>
 
         {/* CTA */}
-        <View style={[s.section, isWeb && s.sectionWeb]}>
-          <View style={isWeb ? s.webInner : s.mobileInner}>
+        <View style={{ paddingVertical: sectionPadV }}>
+          <View style={innerStyle}>
             <View style={s.ctaBox}>
               <LinearGradient colors={['rgba(181,245,66,0.08)', 'transparent']} style={StyleSheet.absoluteFill} />
-              <Text style={[s.ctaTitle, isWeb && s.ctaTitleWeb]}>Pronto para experimentar?</Text>
+              <Text style={[s.ctaTitle, { fontSize: isMobile ? 26 : 40 }]}>Pronto para experimentar?</Text>
               <Text style={s.ctaSub}>Sem registo. Sem cartão. Grátis agora.</Text>
               <View style={s.ctaActions}>
                 <TouchableOpacity style={s.ctaBtn} onPress={() => router.push('/app' as any)} activeOpacity={0.85}>
@@ -158,26 +167,16 @@ const s = StyleSheet.create({
   backText: { fontFamily: FONTS.bodyMedium, fontSize: 14, color: COLORS.textSecondary },
   logo: { fontFamily: FONTS.display, fontSize: 18, color: COLORS.white },
   accent: { color: COLORS.accent },
-  webInner: { maxWidth: MAX_WIDTH, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: 48 },
-  mobileInner: { paddingHorizontal: 24 },
 
-  hero: { paddingVertical: 40, paddingHorizontal: 24, overflow: 'hidden', position: 'relative' },
-  heroWeb: { paddingVertical: 120, paddingHorizontal: 0 },
+  hero: { overflow: 'hidden', position: 'relative' },
   eyebrow: { fontFamily: FONTS.bodyMedium, fontSize: 11, color: COLORS.accent, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 },
-  heroTitle: { fontFamily: FONTS.display, fontSize: 34, color: COLORS.white, letterSpacing: -1, lineHeight: 42, marginBottom: 16 },
-  heroTitleWeb: { fontSize: 60, lineHeight: 68, letterSpacing: -2, marginBottom: 20 },
-  heroSub: { fontFamily: FONTS.body, fontSize: 15, color: COLORS.textSecondary, lineHeight: 24, maxWidth: 500 },
-  heroSubWeb: { fontSize: 18, lineHeight: 28 },
+  heroTitle: { fontFamily: FONTS.display, color: COLORS.white, letterSpacing: -1, marginBottom: 16 },
+  heroSub: { fontFamily: FONTS.body, color: COLORS.textSecondary, lineHeight: 26, maxWidth: 560 },
 
-  section: { paddingVertical: 52 },
-  sectionWeb: { paddingVertical: 100 },
-  sectionTitle: { fontFamily: FONTS.display, fontSize: 28, color: COLORS.white, letterSpacing: -0.8, marginBottom: 16, lineHeight: 36 },
-  sectionTitleWeb: { fontSize: 44, letterSpacing: -1.5, lineHeight: 52, marginBottom: 20 },
+  sectionTitle: { fontFamily: FONTS.display, color: COLORS.white, letterSpacing: -0.8, marginBottom: 16, lineHeight: 1.2 * 40 },
   sectionSub: { fontFamily: FONTS.body, fontSize: 15, color: COLORS.textSecondary, lineHeight: 24, maxWidth: 480 },
 
-  founderGrid: { flexDirection: 'row', gap: 80, alignItems: 'flex-start' },
-  founderCard: { backgroundColor: COLORS.bgCard, borderWidth: 0.5, borderColor: COLORS.accentBorder, borderRadius: 24, padding: 28, marginBottom: 24 },
-  founderCardWeb: { width: 360, marginBottom: 0 },
+  founderCard: { backgroundColor: COLORS.bgCard, borderWidth: 0.5, borderColor: COLORS.accentBorder, borderRadius: 24, padding: 28, marginBottom: 0 },
   avatarWrap: { position: 'relative', marginBottom: 20 },
   avatar: { width: '100%', aspectRatio: 1, borderRadius: 16, backgroundColor: COLORS.bgElevated, borderWidth: 0.5, borderColor: COLORS.border, alignItems: 'center', justifyContent: 'center' },
   avatarBadge: { position: 'absolute', bottom: 12, right: 12, backgroundColor: COLORS.accent, borderRadius: 99, paddingHorizontal: 14, paddingVertical: 6 },
@@ -193,19 +192,15 @@ const s = StyleSheet.create({
   socialLabel: { fontFamily: FONTS.bodyMedium, fontSize: 13, color: COLORS.textSecondary, flex: 1 },
   socialHandle: { fontFamily: FONTS.body, fontSize: 11, color: COLORS.textTertiary },
 
-  founderBio: {},
-  founderBioWeb: { flex: 1 },
-  bioTitle: { fontFamily: FONTS.display, fontSize: 26, color: COLORS.white, letterSpacing: -0.5, marginBottom: 20, lineHeight: 34 },
-  bioTitleWeb: { fontSize: 36, letterSpacing: -1, lineHeight: 44 },
+  bioTitle: { fontFamily: FONTS.display, color: COLORS.white, letterSpacing: -0.5, marginBottom: 20 },
   bioText: { fontFamily: FONTS.body, fontSize: 15, color: COLORS.textSecondary, lineHeight: 26, marginBottom: 16 },
   bioStrong: { color: COLORS.white, fontFamily: FONTS.bodyMedium },
   quoteBlock: { borderLeftWidth: 2, borderLeftColor: COLORS.accent, paddingLeft: 20, paddingVertical: 16, marginVertical: 20, backgroundColor: COLORS.accentDim, borderRadius: 8 },
   quoteText: { fontFamily: FONTS.body, fontSize: 17, color: COLORS.white, lineHeight: 28, fontStyle: 'italic' },
 
   missionSection: { backgroundColor: COLORS.bgCard, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: COLORS.border },
-  missionGrid: { flexDirection: 'row', gap: 80, alignItems: 'center' },
-  missionNums: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 20 },
-  missionNumCard: { backgroundColor: COLORS.bgElevated, borderWidth: 0.5, borderColor: COLORS.border, borderRadius: RADIUS.lg, padding: 24, minWidth: 140, flex: 1 },
+  missionNums: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  missionNumCard: { backgroundColor: COLORS.bgElevated, borderWidth: 0.5, borderColor: COLORS.border, borderRadius: RADIUS.lg, padding: 24, minWidth: 130, flex: 1 },
   missionNum: { fontFamily: FONTS.display, fontSize: 32, color: COLORS.accent, letterSpacing: -1, marginBottom: 4 },
   missionNumLabel: { fontFamily: FONTS.body, fontSize: 12, color: COLORS.textTertiary },
 
@@ -218,8 +213,7 @@ const s = StyleSheet.create({
   valueDesc: { fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, lineHeight: 22 },
 
   ctaBox: { borderWidth: 0.5, borderColor: COLORS.accentBorder, borderRadius: 24, padding: 40, alignItems: 'center', overflow: 'hidden', position: 'relative' },
-  ctaTitle: { fontFamily: FONTS.display, fontSize: 28, color: COLORS.white, letterSpacing: -0.8, textAlign: 'center', marginBottom: 10 },
-  ctaTitleWeb: { fontSize: 40, letterSpacing: -1.5 },
+  ctaTitle: { fontFamily: FONTS.display, color: COLORS.white, letterSpacing: -0.8, textAlign: 'center', marginBottom: 10 },
   ctaSub: { fontFamily: FONTS.body, fontSize: 15, color: COLORS.textSecondary, marginBottom: 28, textAlign: 'center' },
   ctaActions: { flexDirection: 'row', gap: 12, flexWrap: 'wrap', justifyContent: 'center' },
   ctaBtn: { backgroundColor: COLORS.accent, paddingVertical: 15, paddingHorizontal: 32, borderRadius: RADIUS.md },

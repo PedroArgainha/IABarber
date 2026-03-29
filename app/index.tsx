@@ -125,7 +125,7 @@ export default function Landing() {
           <View style={isWeb ? s.webInner : undefined}>
             <Text style={s.eyebrow}>Como funciona</Text>
             <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>3 passos. Resultado real.</Text>
-            <Text style={s.sectionSub}>Sem complicações. Em menos de um minuto tens o teu novo look na frente.</Text>
+            <Text style={s.sectionSub}>Sem complicações. Em menos de um minuto tens o teu novo look.</Text>
 
             <View style={[s.howGrid, isWeb && s.howGridWeb]}>
               {FEATURES.map((f, i) => (

@@ -22,19 +22,22 @@ export function pw<T>(webVal: T, nativeVal: T): T {
   return isWeb ? webVal : nativeVal;
 }
 
-// Hook dinâmico — usa dentro de componentes para reagir a resize
+// ─── Dynamic responsive hook (use inside components) ──────────────────────
 export function useResponsive() {
   const { width } = useWindowDimensions();
   return {
     width,
-    isMobileS: width < BREAKPOINT_SM,
-    isMobile: width < BREAKPOINT_MD,
-    isTablet: width >= BREAKPOINT_MD && width < BREAKPOINT_LG,
+    isSm: width < BREAKPOINT_SM,
+    isMd: width < BREAKPOINT_MD,
+    isLg: width < BREAKPOINT_LG,
     isDesktop: width >= BREAKPOINT_LG,
-    isWide: width >= MAX_WIDTH,
-    // padding horizontal adaptativo
-    px: width < BREAKPOINT_MD ? 24 : width < BREAKPOINT_LG ? 32 : 48,
-    // colunas para grids
-    cols: width < BREAKPOINT_MD ? 1 : width < BREAKPOINT_LG ? 2 : 3,
+    isTablet: width >= BREAKPOINT_MD && width < BREAKPOINT_LG,
+    isMobileWeb: isWeb && width < BREAKPOINT_MD,
+    // Helper: pick value by breakpoint
+    val: <T>(mobile: T, tablet: T, desktop: T): T => {
+      if (width >= BREAKPOINT_LG) return desktop;
+      if (width >= BREAKPOINT_MD) return tablet;
+      return mobile;
+    },
   };
 }

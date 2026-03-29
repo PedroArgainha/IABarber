@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { COLORS, FONTS, RADIUS } from '../constants/theme';
 import { isWeb, MAX_WIDTH } from '../constants/responsive';
@@ -13,8 +13,8 @@ const LINKS = [
 export default function WebNav() {
   const router = useRouter();
   const pathname = usePathname();
-  const { isMobile } = useResponsive();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isMd } = useResponsive();
 
   if (!isWeb) return null;
 
@@ -26,14 +26,8 @@ export default function WebNav() {
             <Text style={s.logo}><Text style={s.accent}>777</Text> HairVision</Text>
           </TouchableOpacity>
 
-          {isMobile ? (
-            /* Hamburger para mobile web */
-            <TouchableOpacity style={s.hamburger} onPress={() => setMenuOpen(!menuOpen)}>
-              <View style={[s.bar, menuOpen && s.barTop]} />
-              <View style={[s.bar, menuOpen && s.barHide]} />
-              <View style={[s.bar, menuOpen && s.barBottom]} />
-            </TouchableOpacity>
-          ) : (
+          {/* Desktop links */}
+          {!isMd && (
             <View style={s.links}>
               {LINKS.map((l) => (
                 <TouchableOpacity key={l.href} onPress={() => router.push(l.href as any)}>
@@ -45,11 +39,20 @@ export default function WebNav() {
               </TouchableOpacity>
             </View>
           )}
+
+          {/* Mobile hamburger */}
+          {isMd && (
+            <TouchableOpacity style={s.hamburger} onPress={() => setMenuOpen(!menuOpen)}>
+              <View style={[s.bar, menuOpen && s.barTop]} />
+              <View style={[s.bar, s.barMid, menuOpen && s.barMidHidden]} />
+              <View style={[s.bar, menuOpen && s.barBot]} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
-      {/* Dropdown menu mobile */}
-      {isMobile && menuOpen && (
+      {/* Mobile dropdown */}
+      {isMd && menuOpen && (
         <View style={s.mobileMenu}>
           {LINKS.map((l) => (
             <TouchableOpacity
@@ -57,7 +60,9 @@ export default function WebNav() {
               style={s.mobileLink}
               onPress={() => { router.push(l.href as any); setMenuOpen(false); }}
             >
-              <Text style={[s.mobileLinkText, pathname === l.href && s.linkActive]}>{l.label}</Text>
+              <Text style={[s.mobileLinkText, pathname === l.href && s.linkActive]}>
+                {l.label}
+              </Text>
             </TouchableOpacity>
           ))}
           <TouchableOpacity
@@ -85,10 +90,10 @@ const s = StyleSheet.create({
     marginHorizontal: 'auto' as any, paddingHorizontal: 24,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
   },
-  logo: { fontFamily: FONTS.display, fontSize: 18, color: COLORS.white, letterSpacing: -0.5 },
+  logo: { fontFamily: FONTS.display, fontSize: 20, color: COLORS.white, letterSpacing: -0.5 },
   accent: { color: COLORS.accent },
 
-  // Desktop links
+  // Desktop
   links: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   link: { fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, paddingHorizontal: 14, paddingVertical: 8, borderRadius: RADIUS.full },
   linkActive: { color: COLORS.white },
@@ -96,27 +101,26 @@ const s = StyleSheet.create({
   ctaText: { fontFamily: FONTS.displayBold, fontSize: 14, color: '#0a0a0a' },
 
   // Hamburger
-  hamburger: { padding: 8, gap: 5, alignItems: 'flex-end' },
+  hamburger: { padding: 8, gap: 5, justifyContent: 'center' },
   bar: { width: 22, height: 1.5, backgroundColor: COLORS.white, borderRadius: 2 },
+  barMid: {},
+  barMidHidden: { opacity: 0 },
   barTop: { transform: [{ rotate: '45deg' }, { translateY: 6.5 }] },
-  barHide: { opacity: 0 },
-  barBottom: { transform: [{ rotate: '-45deg' }, { translateY: -6.5 }] },
+  barBot: { transform: [{ rotate: '-45deg' }, { translateY: -6.5 }] },
 
-  // Mobile dropdown
+  // Mobile menu
   mobileMenu: {
-    position: 'fixed' as any,
-    top: 64, left: 0, right: 0,
-    zIndex: 99,
+    position: isWeb ? 'fixed' as any : 'relative',
+    top: 64, left: 0, right: 0, zIndex: 99,
     backgroundColor: 'rgba(10,10,10,0.98)',
     borderBottomWidth: 0.5, borderBottomColor: COLORS.border,
-    paddingHorizontal: 24, paddingVertical: 16,
-    gap: 4,
+    padding: 16, gap: 4,
   },
-  mobileLink: { paddingVertical: 14, borderBottomWidth: 0.5, borderBottomColor: COLORS.border },
+  mobileLink: { paddingVertical: 14, paddingHorizontal: 8, borderRadius: RADIUS.md },
   mobileLinkText: { fontFamily: FONTS.body, fontSize: 16, color: COLORS.textSecondary },
   mobileCta: {
     backgroundColor: COLORS.accent,
-    paddingVertical: 14, borderRadius: RADIUS.md,
-    alignItems: 'center', marginTop: 12,
+    paddingVertical: 14, paddingHorizontal: 20,
+    borderRadius: RADIUS.md, alignItems: 'center', marginTop: 8,
   },
 });

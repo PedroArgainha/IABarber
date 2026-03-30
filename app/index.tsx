@@ -230,7 +230,7 @@ const s = StyleSheet.create({
 
   heroBadge: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 20 },
   badgeDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: COLORS.accent },
-  badgeText: { fontFamily: FONTS.body, fontSize: 14, color: COLORS.accent, fontStyle: 'italic' },
+  badgeText: { fontFamily: FONTS.body, fontSize: 14, color: COLORS.accent , fontStyle: 'italic' },
 
   headline: { fontFamily: FONTS.display, fontSize: 42, color: COLORS.white, lineHeight: 50, letterSpacing: -1.5, marginBottom: 16 },
   headlineWeb: { fontSize: 64, lineHeight: 72, letterSpacing: -2.5, marginBottom: 20 },

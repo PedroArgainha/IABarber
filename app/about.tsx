@@ -354,30 +354,8 @@ export default function About() {
         </View>
 
         {/* CTA */}
-        <View style={[s.section, isWeb && s.sectionWeb]}>
-          <View style={[s.webInner, !isWeb && s.mobileInner]}>
-            <View style={s.ctaBox}>
-              <LinearGradient colors={['rgba(181,245,66,0.08)', 'transparent']} style={StyleSheet.absoluteFill} />
-
-              <Text style={[s.ctaTitle, isWeb && !isMd && s.ctaTitleWeb]}>Pronto para experimentar?</Text>
-              <Text style={s.ctaSub}>Sem registo. Sem cartão. Grátis agora.</Text>
-
-              <View style={[s.ctaActions, isMd && s.ctaActionsCol]}>
-                <TouchableOpacity
-                  style={[s.ctaBtn, isMd && s.ctaBtnFull]}
-                  onPress={() => router.push('/app' as any)}
-                  activeOpacity={0.85}
-                >
-                  <Text style={s.ctaBtnText}>Experimentar grátis →</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={[s.outlineBtn, isMd && s.ctaBtnFull]} onPress={() => router.push('/')}>
-                  <Text style={s.outlineBtnText}>← Voltar ao início</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
+        
+   
 
         <Footer />
       </ScrollView>

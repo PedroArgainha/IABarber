@@ -187,7 +187,7 @@ export default function Landing() {
           <View style={isWeb ? s.webInner : undefined}>
             <View style={s.ctaBox}>
               <LinearGradient colors={['rgba(181,245,66,0.08)', 'transparent']} style={StyleSheet.absoluteFill} />
-              <Text style={[s.ctaBoxTitle, isWeb && s.ctaBoxTitleWeb]}>Pronto para o teu{'\n'}novo look?</Text>
+              <Text style={[s.ctaBoxTitle, isWeb && s.ctaBoxTitleWeb]}>Pronto para{'\n'}experimentar?</Text>
               <Text style={s.ctaBoxSub}>Sem registo. Sem cartão. Grátis agora.</Text>
               <View style={s.ctaBoxActions}>
                 <TouchableOpacity style={s.ctaBtn} onPress={() => router.push('/app' as any)} activeOpacity={0.85}>

@@ -1,5 +1,3 @@
-
-
 export const COLORS = {
   bg: "#0a0a0a",
   bgCard: "#141414",
@@ -31,55 +29,89 @@ export const RADIUS = {
   full: 999,
 };
 
+
+
 export const STYLES = {
   hairStyles: [
     {
-      id: "low_fade",
-      name: "Low Fade",
-      emoji: "✂️",
-      desc: "Clássico e limpo",
+      id: "taper_fade",
+      name: "Taper Fade",
+      desc: "Discreto e versátil",
+      image: require("../assets/taperfade.png"),
       prompt:
-        "Transform the hair in this photo to a low fade haircut: clean, precise fade on the sides starting low near the ears, with natural length on top. Keep the face identical.",
+        "Transform the hair in this photo into a taper fade haircut: subtle taper around the sideburns and neckline, clean contours, natural length on top. Keep the face identical.",
     },
     {
-      id: "burst_fade",
-      name: "Burst Fade",
-      emoji: "💈",
-      desc: "Moderno e arrojado",
+      id: "moicano_disfarcado",
+      name: "Moicano Disfarçado",
+      desc: "Atrevido e moderno",
+      image: require("../assets/moicanodisfarcado.png"),
       prompt:
-        "Transform the hair in this photo to a burst fade haircut: a semicircular fade radiating around the ear, with textured hair on top. Keep the face identical.",
+        "Transform the hair in this photo into a disguised mohawk haircut: short faded sides with a more defined strip of volume through the center, modern and wearable. Keep the face identical.",
+    },
+    {
+      id: "buzzcut",
+      name: "Buzzcut",
+      desc: "Prático e marcante",
+      image: require("../assets/buzzcut.png"),
+      prompt:
+        "Transform the hair in this photo into a buzz cut: very short, even length all around, clean and masculine. Keep the face identical.",
+    },
+    {
+      id: "short_fringer",
+      name: "Short Fringer",
+      desc: "Jovem e descontraído",
+      image: require("../assets/shortfringe.png"),
+      prompt:
+        "Transform the hair in this photo into a short fringe haircut: short textured top with a light fringe in the front, clean sides, modern casual finish. Keep the face identical.",
     },
     {
       id: "mullet",
-      name: "Mullet Moderno",
-      emoji: "🎸",
-      desc: "Retrô e estiloso",
+      name: "Mullet",
+      desc: "Irreverente e estiloso",
+      image: require("../assets/mullet.png"),
       prompt:
-        "Transform the hair in this photo to a modern mullet: short on the sides and front, longer in the back, slightly textured. Keep the face identical.",
+        "Transform the hair in this photo into a modern mullet: shorter on the sides and front, longer in the back, textured and stylish. Keep the face identical.",
     },
     {
-      id: "platinado",
-      name: "Platinado",
-      emoji: "⚡",
-      desc: "Ousado e único",
+      id: "old_money",
+      name: "Old Money",
+      desc: "Elegante e clássico",
+      image: require("../assets/oldmoney.png"),
       prompt:
-        "Change the hair color in this photo to platinum blonde / bleached white, maintaining the existing haircut style. Keep the face identical.",
+        "Transform the hair in this photo into an old money haircut: classic, refined, medium-length top with neat side shape, elegant and timeless. Keep the face identical.",
     },
     {
-      id: "french_crop",
-      name: "French Crop",
-      emoji: "🎯",
-      desc: "Minimalista",
+      id: "corte_social",
+      name: "Corte Social",
+      desc: "Clássico e profissional",
+      image: require("../assets/cortesocial.png"),
       prompt:
-        "Transform the hair in this photo to a french crop haircut: short textured fringe at the front, tight sides, minimal length overall. Keep the face identical.",
+        "Transform the hair in this photo into a social haircut: neat, classic, professional, balanced top and sides, clean finish. Keep the face identical.",
     },
     {
-      id: "quiff",
-      name: "Textured Quiff",
-      emoji: "🌊",
-      desc: "Volume natural",
+      id: "low_fade",
+      name: "Low Fade",
+      desc: "Limpo e equilibrado",
+      image: require("../assets/lowfade.png"),
       prompt:
-        "Transform the hair in this photo to a textured quiff: voluminous swept-back top with natural waves and texture, clean sides. Keep the face identical.",
+        "Transform the hair in this photo into a low fade haircut: clean fade starting low near the ears, natural length on top, sharp and balanced look. Keep the face identical.",
+    },
+    {
+      id: "mid_fade",
+      name: "Mid Fade",
+      desc: "Moderno e versátil",
+      image: require("../assets/midfade.png"),
+      prompt:
+        "Transform the hair in this photo into a mid fade haircut: fade starting around the middle of the sides, balanced contrast with the top, modern and versatile. Keep the face identical.",
+    },
+    {
+      id: "high_fade",
+      name: "High Fade",
+      desc: "Marcante e definido",
+      image: require("../assets/highfade.png"),
+      prompt:
+        "Transform the hair in this photo into a high fade haircut: strong high fade beginning near the temple area, sharp contrast between the sides and the top. Keep the face identical.",
     },
   ],
 };

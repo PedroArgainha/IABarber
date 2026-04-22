@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,13 +11,13 @@ const { width } = Dimensions.get('window');
 
 const FEATURES = [
   { icon: '📸', num: '01', title: 'Envia a tua selfie', desc: 'Rosto visível, boa iluminação, fundo neutro. Quanto melhor a foto, melhor o resultado.' },
-  { icon: '✂️', num: '02', title: 'Escolhe o estilo', desc: '6 cortes criados pelos melhores barbeiros. Cada um com prompt de IA otimizado.' },
+  { icon: '✂️', num: '02', title: 'Escolhe o estilo', desc: '10 cortes com prompts de IA otimizados para testares o look antes de cortar.' },
   { icon: '⚡', num: '03', title: 'Vê o resultado', desc: 'A IA gera o teu novo look em segundos. Compara antes e depois e partilha com os amigos.' },
 ];
 
 const TESTIMONIALS = [
   { name: 'Miguel S.', location: 'Lisboa', text: 'Fui ao barbeiro sem dúvidas pela primeira vez na vida. Incrível o que a IA consegue fazer.' },
-  { name: 'Diogo F.', location: 'Porto', text: 'Experimentei o platinado antes de fazer. A minha namorada aprovou. Valeu cada cêntimo.' },
+  { name: 'Diogo F.', location: 'Porto', text: 'Experimentei o mid fade antes de ir ao barbeiro. Ficou muito mais fácil decidir.' },
   { name: 'Tomás R.', location: 'Braga', text: 'A minha mulher aprovou o corte antes de eu ir ao barbeiro. Nunca mais houve surpresas.' },
 ];
 
@@ -88,9 +88,10 @@ export default function Landing() {
                     </View>
 
                     <View style={s.phoneStylesGrid}>
-                      {['✂️ Low Fade', '💈 Burst Fade', '🎸 Mullet', '⚡ Platinado'].map((st, i) => (
-                        <View key={i} style={[s.phoneStyleCard, i === 1 && s.phoneStyleSelected]}>
-                          <Text style={s.phoneStyleText}>{st}</Text>
+                      {STYLES.hairStyles.slice(0, 4).map((style, i) => (
+                        <View key={style.id} style={[s.phoneStyleCard, i === 0 && s.phoneStyleSelected]}>
+                          <Image source={style.image} style={s.phoneStyleThumb} resizeMode="cover" />
+                          <Text style={s.phoneStyleText}>{style.name}</Text>
                         </View>
                       ))}
                     </View>
@@ -146,9 +147,9 @@ export default function Landing() {
             <Text style={s.eyebrow}>Estilos disponíveis</Text>
             <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>Criados pelos melhores.</Text>
             <View style={[s.stylesGrid, isWeb && s.stylesGridWeb]}>
-              {STYLES.hairStyles.map((style) => (
+             {STYLES.hairStyles.map((style) => (
                 <View key={style.id} style={[s.styleCard, isWeb && s.styleCardWeb]}>
-                  <Text style={s.styleEmoji}>{style.emoji}</Text>
+                  <Image source={style.image} style={s.styleImage} resizeMode="cover" />
                   <Text style={s.styleName}>{style.name}</Text>
                   <Text style={s.styleDesc}>{style.desc}</Text>
                 </View>
@@ -297,17 +298,36 @@ const s = StyleSheet.create({
     gap: 6,
   },
   phoneUploadText: { fontFamily: FONTS.body, fontSize: 11, color: COLORS.textSecondary },
+
+
   phoneStylesGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 14 },
-  phoneStyleCard: {
-    backgroundColor: COLORS.bgElevated,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderWidth: 0.5,
-    borderColor: COLORS.border,
-  },
-  phoneStyleSelected: { borderColor: COLORS.accent, backgroundColor: COLORS.accentDim },
-  phoneStyleText: { fontFamily: FONTS.body, fontSize: 10, color: COLORS.textSecondary },
+phoneStyleCard: {
+  width: '48%' as any,
+  backgroundColor: COLORS.bgElevated,
+  borderRadius: 8,
+  padding: 6,
+  borderWidth: 0.5,
+  borderColor: COLORS.border,
+  alignItems: 'center',
+},
+phoneStyleSelected: { borderColor: COLORS.accent, backgroundColor: COLORS.accentDim },
+phoneStyleThumb: {
+  width: '100%',
+  height: 56,
+  borderRadius: 6,
+  marginBottom: 6,
+},
+phoneStyleText: {
+  fontFamily: FONTS.body,
+  fontSize: 10,
+  color: COLORS.textSecondary,
+  textAlign: 'center',
+},
+
+
+
+
+
   phoneBtn: { backgroundColor: COLORS.accent, borderRadius: 10, paddingVertical: 13, alignItems: 'center' },
   phoneBtnText: { fontFamily: FONTS.displayBold, fontSize: 13, color: '#0a0a0a' },
   // Home indicator (barra inferior dos iPhones modernos)
@@ -349,14 +369,29 @@ const s = StyleSheet.create({
   howDesc: { fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, lineHeight: 22 },
 
   // ── STYLES ──
-  stylesSection: { paddingHorizontal: 24, paddingVertical: 52, backgroundColor: COLORS.bgCard, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: COLORS.border },
-  stylesGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  stylesGridWeb: { flexWrap: 'nowrap' },
-  styleCard: { backgroundColor: COLORS.bgElevated, borderWidth: 1.5, borderColor: COLORS.border, borderRadius: RADIUS.md, padding: 16, alignItems: 'center', minWidth: 100 },
-  styleCardWeb: { flex: 1, paddingVertical: 24 },
-  styleEmoji: { fontSize: 28, marginBottom: 8 },
-  styleName: { fontFamily: FONTS.displayBold, fontSize: 13, color: COLORS.white, marginBottom: 3, textAlign: 'center' },
-  styleDesc: { fontFamily: FONTS.body, fontSize: 11, color: COLORS.textTertiary, textAlign: 'center' },
+stylesGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+stylesGridWeb: { flexWrap: 'wrap', gap: 16 },
+styleCard: {
+  backgroundColor: COLORS.bgElevated,
+  borderWidth: 1.5,
+  borderColor: COLORS.border,
+  borderRadius: RADIUS.md,
+  padding: 12,
+  alignItems: 'center',
+  width: '48%' as any,
+},
+styleCardWeb: {
+  width: 180,
+  paddingVertical: 16,
+},
+styleImage: {
+  width: '100%',
+  height: 100,
+  borderRadius: 10,
+  marginBottom: 10,
+},
+styleName: { fontFamily: FONTS.displayBold, fontSize: 13, color: COLORS.white, marginBottom: 3, textAlign: 'center' },
+styleDesc: { fontFamily: FONTS.body, fontSize: 11, color: COLORS.textTertiary, textAlign: 'center' },
 
   // ── TESTIMONIALS ──
   testimonialsGrid: { gap: 12 },

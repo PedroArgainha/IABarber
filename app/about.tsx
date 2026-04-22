@@ -27,13 +27,15 @@ const DEVELOPERS = [
     name: 'Tomás Melo',
     role: 'Web Developer',
     badge: 'Web Dev',
-    photo: null as any, // TODO: replace with require('../assets/images/tomas.jpg')
+    photo: null as any,
+    bio: 'Responsável pelo desenvolvimento da interface web, focando-se na experiência do utilizador, estrutura visual e integração da plataforma.',
   },
   {
     name: 'Pedro Argainha',
     role: 'Web Developer',
     badge: 'Web Dev',
-    photo: null as any, // TODO: replace with require('../assets/images/pedro.jpg')
+    photo: null as any,
+    bio: 'Responsável pela implementação técnica da aplicação web, garantindo desempenho, organização do código e uma navegação fluida.',
   },
 ];
 
@@ -52,9 +54,19 @@ const SOCIALS = [
 // ─────────────────────────────────────────────
 // Shared avatar block — same visual style, size driven by card
 // ─────────────────────────────────────────────
-function PersonAvatar({ photo, badge, accentBadge = false }: { photo: any; badge: string; accentBadge?: boolean }) {
+function PersonAvatar({
+  photo,
+  badge,
+  accentBadge = false,
+  compact = false,
+}: {
+  photo: any;
+  badge: string;
+  accentBadge?: boolean;
+  compact?: boolean;
+}) {
   return (
-    <View style={av.wrap}>
+    <View style={[av.wrap, compact && av.wrapCompact]}>
       {photo ? (
         <Image source={photo} style={av.image} resizeMode="cover" />
       ) : (
@@ -71,6 +83,7 @@ function PersonAvatar({ photo, badge, accentBadge = false }: { photo: any; badge
 
 const av = StyleSheet.create({
   wrap: { position: 'relative', width: '100%', borderRadius: 16, overflow: 'hidden', marginBottom: 20 },
+  wrapCompact: { width: 120, marginBottom: 0 },
   image: { width: '100%', aspectRatio: 1 },
   placeholder: { width: '100%', aspectRatio: 1, backgroundColor: COLORS.bgElevated, borderWidth: 0.5, borderColor: COLORS.border, alignItems: 'center', justifyContent: 'center' },
   placeholderIcon: { fontSize: 56 },
@@ -198,14 +211,20 @@ export default function About() {
             <Text style={[s.sectionTitle, isWeb && !isMd && s.sectionTitleWeb]}>A equipa por trás da plataforma.</Text>
             <Text style={[s.sectionSub, { marginBottom: 40 }]}>A aplicação web da 777 HairVision foi construída por uma equipa dedicada a criar uma experiência rápida, moderna e intuitiva.</Text>
             <View style={[s.devGrid, twoCol && s.devGridWeb]}>
-              {DEVELOPERS.map((dev) => (
-                // Same card style as founder, smaller fixed width + no tags/socials
-                <View key={dev.name} style={[s.personCard, twoCol && s.personCardDevWeb]}>
-                  <PersonAvatar photo={dev.photo} badge={dev.badge} accentBadge={false} />
-                  <Text style={s.personName}>{dev.name}</Text>
-                  <Text style={s.personRole}>{dev.role}</Text>
-                </View>
-              ))}
+
+
+            {DEVELOPERS.map((dev) => (
+        <View key={dev.name} style={[s.personCard, s.devCardWide, twoCol && s.personCardDevWeb]}>
+          <PersonAvatar photo={dev.photo} badge={dev.badge} accentBadge={false} compact />
+          
+          <View style={s.devCardContent}>
+            <Text style={s.personName}>{dev.name}</Text>
+            <Text style={s.personRole}>{dev.role}</Text>
+            <Text style={s.devBio}>{dev.bio}</Text>
+          </View>
+        </View>
+      ))}
+
             </View>
           </View>
         </View>
@@ -244,6 +263,25 @@ const s = StyleSheet.create({
   webInner: { maxWidth: MAX_WIDTH, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: 48 },
   mobileInner: { paddingHorizontal: 24 },
 
+  devCardWide: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 18,
+},
+
+devCardContent: {
+  flex: 1,
+},
+
+devBio: {
+  marginTop: 10,
+  fontFamily: FONTS.body,
+  fontSize: 13,
+  color: COLORS.textSecondary,
+  lineHeight: 21,
+},
+
+
   // ── Hero ──────────────────────────────────────
   hero: { paddingVertical: 40, paddingHorizontal: 24, overflow: 'hidden', position: 'relative' },
   heroWeb: { paddingVertical: 100, paddingHorizontal: 0, marginTop: 64 },
@@ -267,7 +305,7 @@ const s = StyleSheet.create({
   personCardFounder: { borderColor: COLORS.accentBorder },
   personCardFounderWeb: { width: 360 },
   // Developer size on desktop
-  personCardDevWeb: { width: 220 },
+  personCardDevWeb: { width: 460 },
 
   personName: { fontFamily: FONTS.display, fontSize: 20, color: COLORS.white, letterSpacing: -0.4, marginBottom: 4 },
   personRole: { fontFamily: FONTS.body, fontSize: 13, color: COLORS.textSecondary },

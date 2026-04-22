@@ -1,8 +1,10 @@
 import { useState } from "react";
+
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView,
+  ScrollView, Image,
 } from "react-native";
+
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -78,14 +80,18 @@ export default function StylePicker() {
                 onPress={() => handleSelect(style.id)}
                 activeOpacity={0.85}
               >
-                <View style={[s.cardImg, isSelected && s.cardImgSelected]}>
-                  <Text style={s.cardEmoji}>{style.emoji}</Text>
-                  {isSelected && (
-                    <View style={s.checkBadge}>
-                      <Text style={s.checkText}>✓</Text>
-                    </View>
-                  )}
-                </View>
+
+
+         <View style={[s.cardImg, isSelected && s.cardImgSelected]}>
+  <Image source={style.image} style={s.cardImage} resizeMode="cover" />
+  {isSelected && (
+    <View style={s.checkBadge}>
+      <Text style={s.checkText}>✓</Text>
+    </View>
+  )}
+</View>
+
+
                 <View style={s.cardInfo}>
                   <Text style={[s.cardName, isSelected && s.cardNameSelected]}>
                     {style.name}
@@ -212,15 +218,21 @@ const s = StyleSheet.create({
     borderColor: COLORS.accent,
     backgroundColor: "rgba(181,245,66,0.05)",
   },
-  cardImg: {
-    height: 120,
-    backgroundColor: COLORS.bgElevated,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-  },
-  cardImgSelected: { backgroundColor: "rgba(181,245,66,0.08)" },
-  cardEmoji: { fontSize: 36 },
+
+
+cardImg: {
+  height: 120,
+  backgroundColor: COLORS.bgElevated,
+  position: "relative",
+  overflow: "hidden",
+},
+cardImgSelected: { backgroundColor: "rgba(181,245,66,0.08)" },
+cardImage: {
+  width: "100%",
+  height: "100%",
+},
+
+
   checkBadge: {
     position: "absolute", top: 8, right: 8,
     width: 22, height: 22, borderRadius: 11,

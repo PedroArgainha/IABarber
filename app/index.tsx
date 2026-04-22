@@ -35,7 +35,7 @@ export default function Landing() {
         {/* ── HERO ── */}
         <View style={[s.hero, isWeb && s.heroWeb]}>
           <LinearGradient colors={['rgba(181,245,66,0.07)', 'transparent']} style={StyleSheet.absoluteFill} />
-          <View style={s.decorCircle} />
+         /* <View style={s.decorCircle} /> */
 
           {!isWeb && <SafeAreaView />}
 
@@ -226,7 +226,7 @@ const s = StyleSheet.create({
   heroLeftWeb: { flex: 1 },
   // heroRight contém o telemóvel — altura mínima garante espaço para o mockup completo
   heroRight: { flex: 1, alignItems: 'center', justifyContent: 'center', minHeight: 620 },
-  decorCircle: { position: 'absolute', width: 320, height: 320, borderRadius: 160, backgroundColor: 'rgba(181,245,66,0.05)', top: -80, right: -80 },
+  /* decorCircle: { position: 'absolute', width: 320, height: 320, borderRadius: 160, backgroundColor: 'rgba(181,245,66,0.05)', top: -80, right: -80 }, */ 
 
   heroBadge: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 20 },
   badgeDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: COLORS.accent },
@@ -362,7 +362,17 @@ phoneStyleText: {
   howGridWeb: { flexDirection: 'row', gap: 24 },
   howCard: { backgroundColor: COLORS.bgCard, borderWidth: 0.5, borderColor: COLORS.border, borderRadius: RADIUS.lg, padding: 24, position: 'relative' },
   howCardWeb: { flex: 1 },
-  howNum: { position: 'absolute', top: 16, right: 20, fontFamily: FONTS.display, fontSize: 48, color: 'rgba(181,245,66,0.1)', lineHeight: 52 },
+
+  howNum: {
+  position: 'absolute',
+  top: 16,
+  right: 20,
+  fontFamily: FONTS.display,
+  fontSize: 48,
+  color: COLORS.accent,
+  lineHeight: 52,
+},
+
   howIcon: { fontSize: 32, marginBottom: 14 },
   howTitle: { fontFamily: FONTS.displayBold, fontSize: 18, color: COLORS.white, marginBottom: 8 },
   howDesc: { fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, lineHeight: 22 },

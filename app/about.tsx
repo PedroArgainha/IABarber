@@ -45,6 +45,22 @@ const VALUES = [
   { icon: '🇵🇹', title: 'Orgulhosamente português', desc: 'Construído em Portugal, para o mundo. Acreditamos que o talento português cria produtos de classe mundial.' },
 ];
 
+
+const MISSION_STORY = [
+  {
+    title: 'O problema',
+    text: 'Muita gente chega ao barbeiro sem conseguir explicar exatamente o que quer — e sai com algo diferente do que imaginava.',
+  },
+  {
+    title: 'A ideia',
+    text: 'Usar tecnologia para mostrar o corte antes da tesoura tocar no cabelo, tornando a decisão mais simples e visual.',
+  },
+  {
+    title: 'O resultado',
+    text: 'Mais clareza, mais confiança e uma experiência muito mais tranquila antes de cada corte.',
+  },
+];
+
 const SOCIALS = [
   { icon: '𝕏', label: 'Twitter / X', handle: '@handle', url: 'https://twitter.com' },
   { icon: 'in', label: 'LinkedIn', handle: 'linkedin.com/in/...', url: 'https://linkedin.com' },
@@ -175,14 +191,31 @@ export default function About() {
                 <Text style={[s.sectionTitle, isWeb && !isMd && s.sectionTitleWeb]}>Acabar com as surpresas na cadeira do barbeiro.</Text>
                 <Text style={s.sectionSub}>Acreditamos que cada pessoa merece chegar ao barbeiro com confiança — sabendo exatamente o que quer e como vai ficar.</Text>
               </View>
-              <View style={[s.missionNums, twoCol && { flex: 1 }]}>
-                {[['10K+', 'Utilizadores'], ['50K+', 'Looks gerados'], ['4.9★', 'Avaliação'], ['<10s', 'Resposta IA']].map(([n, l]) => (
-                  <View key={n} style={[s.missionNumCard, !twoCol && s.missionNumCardMobile]}>
-                    <Text style={s.missionNum}>{n}</Text>
-                    <Text style={s.missionNumLabel}>{l}</Text>
-                  </View>
-                ))}
-              </View>
+
+
+          <View style={[s.missionStoryCard, twoCol && { flex: 1 }]}>
+  <Text style={s.missionStoryEyebrow}>Porque existimos</Text>
+
+  {MISSION_STORY.map((item, index) => (
+    <View
+      key={item.title}
+      style={[
+        s.missionStoryItem,
+        index !== MISSION_STORY.length - 1 && s.missionStoryItemBorder,
+      ]}
+    >
+      <Text style={s.missionStoryTitle}>{item.title}</Text>
+      <Text style={s.missionStoryText}>{item.text}</Text>
+    </View>
+  ))}
+
+  <View style={s.missionStoryQuote}>
+    <Text style={s.missionStoryQuoteText}>
+      “Queremos que cada pessoa se sente na cadeira do barbeiro já com confiança na decisão.”
+    </Text>
+  </View>
+</View>
+
             </View>
           </View>
         </View>
@@ -341,6 +374,65 @@ devBio: {
   missionNumCardMobile: { minWidth: '45%' as any },
   missionNum: { fontFamily: FONTS.display, fontSize: 32, color: COLORS.accent, letterSpacing: -1, marginBottom: 4 },
   missionNumLabel: { fontFamily: FONTS.body, fontSize: 12, color: COLORS.textTertiary },
+
+
+
+  missionStoryCard: {
+  backgroundColor: COLORS.bgElevated,
+  borderWidth: 0.5,
+  borderColor: COLORS.border,
+  borderRadius: RADIUS.lg,
+  padding: 28,
+  marginTop: 20,
+},
+
+missionStoryEyebrow: {
+  fontFamily: FONTS.bodyMedium,
+  fontSize: 11,
+  color: COLORS.accent,
+  letterSpacing: 2,
+  textTransform: 'uppercase',
+  marginBottom: 20,
+},
+
+missionStoryItem: {
+  paddingVertical: 16,
+},
+
+missionStoryItemBorder: {
+  borderBottomWidth: 0.5,
+  borderBottomColor: COLORS.border,
+},
+
+missionStoryTitle: {
+  fontFamily: FONTS.displayBold,
+  fontSize: 18,
+  color: COLORS.white,
+  marginBottom: 8,
+},
+
+missionStoryText: {
+  fontFamily: FONTS.body,
+  fontSize: 14,
+  color: COLORS.textSecondary,
+  lineHeight: 24,
+},
+
+missionStoryQuote: {
+  marginTop: 20,
+  paddingTop: 20,
+  borderTopWidth: 0.5,
+  borderTopColor: COLORS.border,
+},
+
+missionStoryQuoteText: {
+  fontFamily: FONTS.body,
+  fontSize: 15,
+  color: COLORS.white,
+  lineHeight: 24,
+  fontStyle: 'italic',
+},
+
 
   // ── Values ────────────────────────────────────
   valuesGrid: { gap: 12, marginTop: 32 },

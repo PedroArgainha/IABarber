@@ -17,7 +17,7 @@ const VALUES = [
 const SOCIALS = [
   { icon: '𝕏', label: 'Twitter / X', handle: '@handle', url: 'https://twitter.com' },
   { icon: 'in', label: 'LinkedIn', handle: 'linkedin.com/in/...', url: 'https://linkedin.com' },
-  { icon: '@', label: 'Instagram', handle: '@handle', url: 'https://instagram.com' },
+  { icon: '@', label: 'Instagram', handle: '@handle', url: 'https://instagram/777gustavocorrei.l.com' },
 ];
 
 export default function About() {

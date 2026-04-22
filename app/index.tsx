@@ -11,7 +11,7 @@ const { width } = Dimensions.get('window');
 
 const FEATURES = [
   { icon: '📸', num: '01', title: 'Envia a tua selfie', desc: 'Rosto visível, boa iluminação, fundo neutro. Quanto melhor a foto, melhor o resultado.' },
-  { icon: '✂️', num: '02', title: 'Escolhe o estilo', desc: '6 cortes curados pelos melhores barbeiros. Cada um com prompt de IA otimizado.' },
+  { icon: '✂️', num: '02', title: 'Escolhe o estilo', desc: '6 cortes criados pelos melhores barbeiros. Cada um com prompt de IA otimizado.' },
   { icon: '⚡', num: '03', title: 'Vê o resultado', desc: 'A IA gera o teu novo look em segundos. Compara antes e depois e partilha com os amigos.' },
 ];
 
@@ -144,7 +144,7 @@ export default function Landing() {
         <View style={[s.stylesSection, isWeb && s.sectionWeb]}>
           <View style={isWeb ? s.webInner : undefined}>
             <Text style={s.eyebrow}>Estilos disponíveis</Text>
-            <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>Curados pelos melhores.</Text>
+            <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>Criados pelos melhores.</Text>
             <View style={[s.stylesGrid, isWeb && s.stylesGridWeb]}>
               {STYLES.hairStyles.map((style) => (
                 <View key={style.id} style={[s.styleCard, isWeb && s.styleCardWeb]}>

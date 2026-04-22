@@ -57,7 +57,6 @@ export default function Landing() {
               <TouchableOpacity style={[s.ctaBtn, isWeb && s.ctaBtnWeb]} onPress={() => router.push('/app' as any)} activeOpacity={0.85}>
                 <Text style={s.ctaText}>Experimentar grátis →</Text>
               </TouchableOpacity>
-              <Text style={s.ctaHint}>Sem registo. Sem cartão. Grátis agora.</Text>
             </View>
 
             {/* Right — phone mockup (web only) */}

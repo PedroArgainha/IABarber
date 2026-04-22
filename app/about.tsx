@@ -159,7 +159,7 @@ export default function About() {
                 <View style={s.quoteBlock}>
                   <Text style={s.quoteText}>"Depois de uma vez mais uma decepção, pensei: tem de haver uma forma melhor de fazer isto."</Text>
                 </View>
-                <Text style={s.bioText}>A ideia surgiu numa tarde de domingo. E se conseguisse ver como ficava com um corte <Text style={s.bioStrong}>antes</Text> de o fazer? Juntei a paixão por tecnologia com o mundo da barbearia e criei a <Text style={s.bioStrong}>777 HairVision</Text>.</Text>
+                <Text style={s.bioText}>E se conseguisse ver como ficava com um corte <Text style={s.bioStrong}>antes</Text> de o fazer? Juntei a paixão por tecnologia com o mundo da barbearia e criei a <Text style={s.bioStrong}>777 HairVision</Text>.</Text>
                 <Text style={s.bioText}>A missão é simples: <Text style={s.bioStrong}>dar a cada pessoa a confiança de saber exatamente como vai ficar antes de sentar na cadeira.</Text></Text>
               </View>
             </View>

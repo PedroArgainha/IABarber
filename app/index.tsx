@@ -1,13 +1,11 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONTS, RADIUS, STYLES } from '../constants/theme';
-import { isWeb, MAX_WIDTH } from '../constants/responsive';
+import { isWeb, MAX_WIDTH, useResponsive } from '../constants/responsive';
 import WebNav from '../components/WebNav';
 import Footer from '../components/Footer';
-
-const { width } = Dimensions.get('window');
 
 const FEATURES = [
   {
@@ -57,6 +55,11 @@ const STATS = [
 
 export default function Landing() {
   const router = useRouter();
+  const { isMd, isDesktop, isTablet } = useResponsive();
+
+  // Phone mockup only on wide desktop
+  const showMockup = isWeb && isDesktop;
+  const heroRow = showMockup;
 
   return (
     <View style={s.root}>
@@ -68,13 +71,13 @@ export default function Landing() {
 
           {!isWeb && <SafeAreaView />}
 
-          <View style={[s.heroInner, isWeb && s.heroInnerWeb]}>
-            <View style={[s.heroLeft, isWeb && s.heroLeftWeb]}>
+          <View style={[s.heroInner, isWeb && s.heroInnerWeb, heroRow && s.heroInnerRow]}>
+            <View style={[s.heroLeft, heroRow && s.heroLeftRow]}>
               <View style={s.heroBadge}>
                 <Text style={s.badgeText}>O teu novo look em segundos · Grátis para testar</Text>
               </View>
 
-              <Text style={[s.headline, isWeb && s.headlineWeb]}>
+              <Text style={[s.headline, isWeb && (isTablet ? s.headlineTablet : s.headlineWeb)]}>
                 Vê o teu{'\n'}
                 <Text style={s.headlineAccent}>novo corte</Text>
                 {'\n'}antes de cortar.
@@ -94,7 +97,7 @@ export default function Landing() {
               </TouchableOpacity>
             </View>
 
-            {isWeb && (
+            {showMockup && (
               <View style={s.heroRight}>
                 <View style={s.phoneMockupOuter}>
                   <View style={s.phoneNotchWrapper}>
@@ -153,12 +156,12 @@ export default function Landing() {
         <View style={[s.section, isWeb && s.sectionWeb]} id="como-funciona">
           <View style={isWeb ? s.webInner : undefined}>
             <Text style={s.eyebrow}>Como funciona</Text>
-            <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>3 passos. Resultado real.</Text>
+            <Text style={[s.sectionTitle, isWeb && !isMd && s.sectionTitleWeb]}>3 passos. Resultado real.</Text>
             <Text style={s.sectionSub}>Sem complicações. Em menos de um minuto tens o teu novo look.</Text>
 
-            <View style={[s.howGrid, isWeb && s.howGridWeb]}>
+            <View style={[s.howGrid, isWeb && !isMd && s.howGridWeb]}>
               {FEATURES.map((f, i) => (
-                <View key={i} style={[s.howCard, isWeb && s.howCardWeb]}>
+                <View key={i} style={[s.howCard, isWeb && !isMd && s.howCardWeb]}>
                   <Text style={s.howNum}>{f.num}</Text>
                   <Text style={s.howIcon}>{f.icon}</Text>
                   <Text style={s.howTitle}>{f.title}</Text>
@@ -171,9 +174,9 @@ export default function Landing() {
 
         {/* ── STYLES ── */}
         <View style={[s.stylesSection, isWeb && s.sectionWeb]}>
-          <View style={isWeb ? s.webInner : undefined}>
+          <View style={isWeb ? s.webInner : s.mobileInner}>
             <Text style={s.eyebrow}>Estilos disponíveis</Text>
-            <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>Criados pelos melhores.</Text>
+            <Text style={[s.sectionTitle, isWeb && !isMd && s.sectionTitleWeb]}>Criados pelos melhores.</Text>
 
             <View style={[s.stylesGrid, isWeb && s.stylesGridWeb]}>
               {STYLES.hairStyles.map((style) => (
@@ -191,11 +194,11 @@ export default function Landing() {
         <View style={[s.section, isWeb && s.sectionWeb]}>
           <View style={isWeb ? s.webInner : undefined}>
             <Text style={s.eyebrow}>O que dizem</Text>
-            <Text style={[s.sectionTitle, isWeb && s.sectionTitleWeb]}>Resultados reais.</Text>
+            <Text style={[s.sectionTitle, isWeb && !isMd && s.sectionTitleWeb]}>Resultados reais.</Text>
 
-            <View style={[s.testimonialsGrid, isWeb && s.testimonialsGridWeb]}>
+            <View style={[s.testimonialsGrid, isWeb && !isMd && s.testimonialsGridWeb]}>
               {TESTIMONIALS.map((t, i) => (
-                <View key={i} style={[s.testimonialCard, isWeb && s.testimonialCardWeb]}>
+                <View key={i} style={[s.testimonialCard, isWeb && !isMd && s.testimonialCardWeb]}>
                   <Text style={s.tStars}>★★★★★</Text>
                   <Text style={s.tText}>"{t.text}"</Text>
 
@@ -220,7 +223,7 @@ export default function Landing() {
           <View style={isWeb ? s.webInner : undefined}>
             <View style={s.ctaBox}>
               <LinearGradient colors={['rgba(181,245,66,0.08)', 'transparent']} style={StyleSheet.absoluteFill} />
-              <Text style={[s.ctaBoxTitle, isWeb && s.ctaBoxTitleWeb]}>
+              <Text style={[s.ctaBoxTitle, isWeb && !isMd && s.ctaBoxTitleWeb]}>
                 Pronto para{'\n'}experimentar?
               </Text>
               <Text style={s.ctaBoxSub}>Sem registo. Sem cartão. Grátis agora.</Text>
@@ -261,16 +264,21 @@ const s = StyleSheet.create({
     paddingHorizontal: 0,
   },
   heroInner: { flex: 1 },
+  // Shared web centering (tablet + desktop single column)
   heroInnerWeb: {
     maxWidth: MAX_WIDTH,
     marginHorizontal: 'auto' as any,
+    paddingHorizontal: 24,
+  },
+  // Desktop only: two-column with mockup
+  heroInnerRow: {
     paddingHorizontal: 48,
     flexDirection: 'row',
-    gap: 80,
+    gap: 60,
     alignItems: 'center',
   },
   heroLeft: {},
-  heroLeftWeb: { flex: 1 },
+  heroLeftRow: { flex: 1 },
   heroRight: {
     flex: 1,
     alignItems: 'center',
@@ -298,6 +306,12 @@ const s = StyleSheet.create({
     lineHeight: 50,
     letterSpacing: -1.5,
     marginBottom: 16,
+  },
+  headlineTablet: {
+    fontSize: 52,
+    lineHeight: 60,
+    letterSpacing: -2,
+    marginBottom: 20,
   },
   headlineWeb: {
     fontSize: 64,
@@ -476,12 +490,16 @@ const s = StyleSheet.create({
     maxWidth: MAX_WIDTH,
     width: '100%',
     marginHorizontal: 'auto' as any,
-    paddingHorizontal: 48,
+    paddingHorizontal: 24,
+  },
+  mobileInner: {
+    paddingHorizontal: 24,
   },
   statItem: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 24,
+    paddingVertical: 20,
+    paddingHorizontal: 4,
   },
   statBorder: {
     borderRightWidth: 0.5,
@@ -489,15 +507,17 @@ const s = StyleSheet.create({
   },
   statNum: {
     fontFamily: FONTS.display,
-    fontSize: 24,
+    fontSize: 18,
     color: COLORS.accent,
     letterSpacing: -0.5,
+    textAlign: 'center',
   },
   statLabel: {
     fontFamily: FONTS.body,
-    fontSize: 11,
+    fontSize: 10,
     color: COLORS.textTertiary,
     marginTop: 2,
+    textAlign: 'center',
   },
 
   // ── SECTIONS ──
@@ -597,10 +617,13 @@ const s = StyleSheet.create({
     borderRadius: RADIUS.md,
     padding: 12,
     alignItems: 'center',
-    width: '48%' as any,
+    flexBasis: '47%' as any,
+    flexGrow: 0,
+    flexShrink: 1,
   },
   styleCardWeb: {
-    width: 180,
+    flexBasis: 180,
+    flexGrow: 0,
     paddingVertical: 16,
   },
   styleImage: {
@@ -682,19 +705,19 @@ const s = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: COLORS.accentBorder,
     borderRadius: RADIUS.xl,
-    padding: 40,
+    padding: 28,
     alignItems: 'center',
     overflow: 'hidden',
     position: 'relative',
   },
   ctaBoxTitle: {
     fontFamily: FONTS.display,
-    fontSize: 30,
+    fontSize: 28,
     color: COLORS.white,
     letterSpacing: -0.8,
     textAlign: 'center',
     marginBottom: 10,
-    lineHeight: 38,
+    lineHeight: 36,
   },
   ctaBoxTitleWeb: {
     fontSize: 48,
@@ -713,6 +736,7 @@ const s = StyleSheet.create({
     gap: 12,
     flexWrap: 'wrap',
     justifyContent: 'center',
+    width: '100%',
   },
   outlineBtn: {
     paddingVertical: 15,

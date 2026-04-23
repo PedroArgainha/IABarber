@@ -114,7 +114,8 @@ const av = StyleSheet.create({
     marginBottom: 20,
   },
   wrapCompact: {
-    width: 120,
+    width: 100,
+    flexShrink: 0,
     marginBottom: 0,
   },
   image: {
@@ -296,7 +297,7 @@ export default function About() {
 
                   <View style={s.missionStoryQuoteBlock}>
                     <Text style={s.missionStoryQuoteText}>
-                      “Queremos que cada pessoa se sente na cadeira do barbeiro já com confiança na decisão.”
+                      "Queremos que cada pessoa se sente na cadeira do barbeiro já com confiança na decisão."
                     </Text>
                   </View>
                 </View>
@@ -353,10 +354,6 @@ export default function About() {
           </View>
         </View>
 
-        {/* CTA */}
-        
-   
-
         <Footer />
       </ScrollView>
     </View>
@@ -406,12 +403,13 @@ const s = StyleSheet.create({
 
   devCardWide: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 18,
+    alignItems: 'flex-start',
+    gap: 16,
   },
 
   devCardContent: {
     flex: 1,
+    minWidth: 0,
   },
 
   devBio: {
@@ -528,11 +526,12 @@ const s = StyleSheet.create({
   },
 
   personCardFounderWeb: {
-    width: 360,
+    width: 340,
+    flexShrink: 0,
   },
 
   personCardDevWeb: {
-    width: 460,
+    flex: 1,
   },
 
   personName: {
@@ -557,7 +556,7 @@ const s = StyleSheet.create({
   // ── Founder layout ────────────────────────────
   founderGrid: {
     flexDirection: 'row',
-    gap: 80,
+    gap: 60,
     alignItems: 'flex-start',
   },
 
@@ -570,6 +569,7 @@ const s = StyleSheet.create({
 
   founderBioWeb: {
     flex: 1,
+    minWidth: 0,
   },
 
   tagsRow: {
@@ -686,7 +686,7 @@ const s = StyleSheet.create({
 
   missionGrid: {
     flexDirection: 'row',
-    gap: 80,
+    gap: 60,
     alignItems: 'flex-start',
   },
 

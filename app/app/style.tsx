@@ -17,14 +17,15 @@ export default function StylePicker() {
   const [selected, setSelected] = useState<string | null>(null);
   const { width, isMd, isDesktop } = useResponsive();
 
-  // Card width: on web desktop = 3 columns, tablet = 2 columns, mobile = 2 columns
+  // Card width: on web desktop = 3 columns, tablet/mobile-web = 2 columns, native = 2 columns
   const getCardWidth = () => {
     if (isWeb) {
-      const maxW = Math.min(width, 680);
-      const hPad = 48;
+      const containerMaxW = 680;
+      const actualW = Math.min(width, containerMaxW);
+      const hPad = isMd ? 24 : 48;
       const gap = 16;
       const cols = isDesktop ? 3 : 2;
-      return (maxW - hPad * 2 - gap * (cols - 1)) / cols;
+      return (actualW - hPad * 2 - gap * (cols - 1)) / cols;
     }
     // Native: always 2 cols
     const hPad = 24 * 2;
@@ -49,7 +50,7 @@ export default function StylePicker() {
   const content = (
     <>
       {/* Header */}
-      <View style={[s.header, isWeb && s.headerWeb]}>
+      <View style={[s.header, isWeb && (isMd ? s.headerWebMobile : s.headerWeb)]}>
         <TouchableOpacity onPress={() => router.back()} style={s.backBtn}>
           <Text style={s.backText}>← Voltar</Text>
         </TouchableOpacity>
@@ -65,7 +66,7 @@ export default function StylePicker() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[s.scrollContent, isWeb && s.scrollContentWeb]}
+        contentContainerStyle={[s.scrollContent, isWeb && (isMd ? s.scrollContentWebMobile : s.scrollContentWeb)]}
       >
         <Text style={[s.title, isWeb && !isMd && s.titleWeb]}>Escolhe o teu{"\n"}estilo</Text>
         <Text style={s.sub}>Clica no corte que queres experimentar.</Text>
@@ -80,17 +81,14 @@ export default function StylePicker() {
                 onPress={() => handleSelect(style.id)}
                 activeOpacity={0.85}
               >
-
-
-         <View style={[s.cardImg, isSelected && s.cardImgSelected]}>
-  <Image source={style.image} style={s.cardImage} resizeMode="cover" />
-  {isSelected && (
-    <View style={s.checkBadge}>
-      <Text style={s.checkText}>✓</Text>
-    </View>
-  )}
-</View>
-
+                <View style={[s.cardImg, isSelected && s.cardImgSelected]}>
+                  <Image source={style.image} style={s.cardImage} resizeMode="cover" />
+                  {isSelected && (
+                    <View style={s.checkBadge}>
+                      <Text style={s.checkText}>✓</Text>
+                    </View>
+                  )}
+                </View>
 
                 <View style={s.cardInfo}>
                   <Text style={[s.cardName, isSelected && s.cardNameSelected]}>
@@ -179,6 +177,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 24, paddingTop: 8, paddingBottom: 16,
   },
   headerWeb: { paddingHorizontal: 48 },
+  headerWebMobile: { paddingHorizontal: 24 },
   backBtn: { paddingRight: 16, paddingVertical: 8 },
   backText: { fontFamily: FONTS.bodyMedium, fontSize: 14, color: COLORS.textSecondary },
   steps: { flexDirection: "row", alignItems: "center" },
@@ -195,6 +194,7 @@ const s = StyleSheet.create({
 
   scrollContent: { paddingHorizontal: 24, paddingBottom: 24 },
   scrollContentWeb: { paddingHorizontal: 48, paddingBottom: 60 },
+  scrollContentWebMobile: { paddingHorizontal: 24, paddingBottom: 60 },
 
   title: {
     fontFamily: FONTS.display, fontSize: 32,
@@ -219,19 +219,17 @@ const s = StyleSheet.create({
     backgroundColor: "rgba(181,245,66,0.05)",
   },
 
-
-cardImg: {
-  height: 120,
-  backgroundColor: COLORS.bgElevated,
-  position: "relative",
-  overflow: "hidden",
-},
-cardImgSelected: { backgroundColor: "rgba(181,245,66,0.08)" },
-cardImage: {
-  width: "100%",
-  height: "100%",
-},
-
+  cardImg: {
+    height: 120,
+    backgroundColor: COLORS.bgElevated,
+    position: "relative",
+    overflow: "hidden",
+  },
+  cardImgSelected: { backgroundColor: "rgba(181,245,66,0.08)" },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+  },
 
   checkBadge: {
     position: "absolute", top: 8, right: 8,

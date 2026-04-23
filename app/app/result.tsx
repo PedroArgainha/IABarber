@@ -46,12 +46,12 @@ export default function Result() {
     router.replace("/app");
   };
 
-  const compareHeight = isWeb ? (isDesktop ? 340 : 260) : 220;
+  const compareHeight = isWeb ? (isDesktop ? 340 : 240) : 220;
 
   const bodyContent = (
     <>
       {/* Header */}
-      <View style={[s.header, isWeb && s.headerWeb]}>
+      <View style={[s.header, isWeb && (isMd ? s.headerWebMobile : s.headerWeb)]}>
         <TouchableOpacity onPress={() => router.push("/")} style={s.homeBtn}>
           <Text style={s.homeBtnText}>× Fechar</Text>
         </TouchableOpacity>
@@ -72,7 +72,7 @@ export default function Result() {
       >
         {/* Title */}
         <Animated.View
-          style={[s.titleWrap, isWeb && s.titleWrapWeb, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}
+          style={[s.titleWrap, isWeb && (isMd ? s.titleWrapWebMobile : s.titleWrapWeb), { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}
         >
           <View style={s.successBadge}>
             <Text style={s.successBadgeText}>✓ Pronto!</Text>
@@ -84,7 +84,7 @@ export default function Result() {
         </Animated.View>
 
         {/* Before/After */}
-        <Animated.View style={[s.compareWrap, isWeb && s.compareWrapWeb, { opacity: fadeAnim }]}>
+        <Animated.View style={[s.compareWrap, isWeb && (isMd ? s.compareWrapWebMobile : s.compareWrapWeb), { opacity: fadeAnim }]}>
           <View style={s.compareRow}>
             {/* Before */}
             <View style={s.compareCard}>
@@ -135,7 +135,7 @@ export default function Result() {
         </Animated.View>
 
         {/* Action buttons */}
-        <Animated.View style={[s.actions, isWeb && s.actionsWeb, { opacity: fadeAnim }]}>
+        <Animated.View style={[s.actions, isWeb && (isMd ? s.actionsWebMobile : s.actionsWeb), { opacity: fadeAnim }]}>
           <TouchableOpacity style={s.btnPrimary} onPress={handleShare} activeOpacity={0.85}>
             <Text style={s.btnPrimaryText}>↗ Partilhar resultado</Text>
           </TouchableOpacity>
@@ -170,7 +170,7 @@ export default function Result() {
         </Animated.View>
 
         {/* Rating */}
-        <View style={[s.ratingWrap, isWeb && s.ratingWrapWeb]}>
+        <View style={[s.ratingWrap, isWeb && (isMd ? s.ratingWrapWebMobile : s.ratingWrapWeb)]}>
           <Text style={s.ratingTitle}>Gostas do resultado?</Text>
           <View style={s.stars}>
             {[1, 2, 3, 4, 5].map((star) => (
@@ -222,6 +222,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 24, paddingTop: 8, paddingBottom: 16,
   },
   headerWeb: { paddingHorizontal: 48 },
+  headerWebMobile: { paddingHorizontal: 24 },
   homeBtn: { paddingRight: 16, paddingVertical: 8 },
   homeBtnText: { fontFamily: FONTS.bodyMedium, fontSize: 14, color: COLORS.textSecondary },
   steps: { flexDirection: "row", alignItems: "center" },
@@ -238,6 +239,7 @@ const s = StyleSheet.create({
 
   titleWrap: { paddingHorizontal: 24, marginBottom: 24 },
   titleWrapWeb: { paddingHorizontal: 48 },
+  titleWrapWebMobile: { paddingHorizontal: 24 },
   successBadge: {
     alignSelf: "flex-start",
     backgroundColor: COLORS.accentDim,
@@ -257,6 +259,7 @@ const s = StyleSheet.create({
 
   compareWrap: { paddingHorizontal: 24, marginBottom: 24 },
   compareWrapWeb: { paddingHorizontal: 48 },
+  compareWrapWebMobile: { paddingHorizontal: 24 },
   compareRow: { flexDirection: "row", alignItems: "center", gap: 8 },
   compareCard: {
     flex: 1, borderRadius: RADIUS.lg, overflow: "hidden",
@@ -277,15 +280,17 @@ const s = StyleSheet.create({
   compareLabelText: { fontFamily: FONTS.displayBold, fontSize: 11, color: COLORS.textTertiary, letterSpacing: 1.5 },
   compareLabelTextAfter: { color: COLORS.accent },
   arrowWrap: {
-    width: 32, height: 32, borderRadius: 16,
+    width: 28, height: 28, borderRadius: 14,
     backgroundColor: COLORS.bgCard,
     borderWidth: 0.5, borderColor: COLORS.border,
     alignItems: "center", justifyContent: "center",
+    flexShrink: 0,
   },
-  arrowText: { color: COLORS.textSecondary, fontSize: 14 },
+  arrowText: { color: COLORS.textSecondary, fontSize: 12 },
 
   actions: { paddingHorizontal: 24, gap: 10, marginBottom: 24 },
   actionsWeb: { paddingHorizontal: 48 },
+  actionsWebMobile: { paddingHorizontal: 24 },
   btnPrimary: {
     backgroundColor: COLORS.accent,
     paddingVertical: 16, borderRadius: RADIUS.md, alignItems: "center",
@@ -302,22 +307,25 @@ const s = StyleSheet.create({
   upgradeCard: {
     flexDirection: "row", alignItems: "center",
     borderWidth: 0.5, borderColor: COLORS.accentBorder,
-    borderRadius: RADIUS.lg, padding: 16, overflow: "hidden",
+    borderRadius: RADIUS.lg, padding: 14, overflow: "hidden",
     backgroundColor: COLORS.bgCard,
+    gap: 12,
   },
-  upgradeLeft: { flex: 1 },
-  upgradeTitle: { fontFamily: FONTS.displayBold, fontSize: 14, color: COLORS.white, marginBottom: 2 },
-  upgradeSub: { fontFamily: FONTS.body, fontSize: 12, color: COLORS.textSecondary },
+  upgradeLeft: { flex: 1, minWidth: 0 },
+  upgradeTitle: { fontFamily: FONTS.displayBold, fontSize: 13, color: COLORS.white, marginBottom: 2 },
+  upgradeSub: { fontFamily: FONTS.body, fontSize: 11, color: COLORS.textSecondary },
   upgradeBtn: {
     backgroundColor: COLORS.accent,
-    paddingHorizontal: 16, paddingVertical: 10, borderRadius: RADIUS.md,
+    paddingHorizontal: 14, paddingVertical: 10, borderRadius: RADIUS.md,
+    flexShrink: 0,
   },
-  upgradeBtnText: { fontFamily: FONTS.displayBold, fontSize: 13, color: "#0a0a0a" },
+  upgradeBtnText: { fontFamily: FONTS.displayBold, fontSize: 12, color: "#0a0a0a" },
   freeBtn: { alignItems: "center", paddingVertical: 4 },
   freeBtnText: { fontFamily: FONTS.body, fontSize: 12, color: COLORS.textTertiary },
 
   ratingWrap: { paddingHorizontal: 24, paddingBottom: 40, alignItems: "center" },
   ratingWrapWeb: { paddingHorizontal: 48 },
+  ratingWrapWebMobile: { paddingHorizontal: 24 },
   ratingTitle: { fontFamily: FONTS.bodyMedium, fontSize: 14, color: COLORS.textSecondary, marginBottom: 12 },
   stars: { flexDirection: "row", gap: 8 },
   star: { padding: 4 },

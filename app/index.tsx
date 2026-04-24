@@ -145,8 +145,8 @@ export default function Landing() {
           <View style={[s.statsInner, isWeb && s.webInner]}>
             {STATS.map((st, i) => (
               <View key={i} style={[s.statItem, i < STATS.length - 1 && s.statBorder]}>
-                <Text style={s.statNum}>{st.num}</Text>
-                <Text style={s.statLabel}>{st.label}</Text>
+                <Text style={[s.statNum, isWeb && s.statNumWeb]}>{st.num}</Text>
+                <Text style={[s.statLabel, isWeb && s.statLabelWeb]}>{st.label}</Text>
               </View>
             ))}
           </View>
@@ -178,9 +178,9 @@ export default function Landing() {
             <Text style={s.eyebrow}>Estilos disponíveis</Text>
             <Text style={[s.sectionTitle, isWeb && !isMd && s.sectionTitleWeb]}>Criados pelos melhores.</Text>
 
-            <View style={[s.stylesGrid, isWeb && s.stylesGridWeb]}>
+            <View style={[s.stylesGrid, isWeb && s.stylesGridWeb, isDesktop && s.stylesGridDesktop]}>
               {STYLES.hairStyles.map((style) => (
-                <View key={style.id} style={[s.styleCard, isWeb && s.styleCardWeb]}>
+                <View key={style.id} style={[s.styleCard, isWeb && s.styleCardWeb, isDesktop && s.styleCardDesktop]}>
                   <Image source={style.image} style={s.styleImage} resizeMode="cover" />
                   <Text style={s.styleName}>{style.name}</Text>
                   <Text style={s.styleDesc}>{style.desc}</Text>
@@ -498,7 +498,7 @@ const s = StyleSheet.create({
   statItem: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 22,
     paddingHorizontal: 4,
   },
   statBorder: {
@@ -507,17 +507,27 @@ const s = StyleSheet.create({
   },
   statNum: {
     fontFamily: FONTS.display,
-    fontSize: 18,
+    fontSize: 20,
     color: COLORS.accent,
     letterSpacing: -0.5,
+    lineHeight: 24,
     textAlign: 'center',
+  },
+  statNumWeb: {
+    fontSize: 26,
+    lineHeight: 30,
   },
   statLabel: {
     fontFamily: FONTS.body,
-    fontSize: 10,
-    color: COLORS.textTertiary,
-    marginTop: 2,
+    fontSize: 11,
+    color: COLORS.white,
+    lineHeight: 15,
+    marginTop: 4,
     textAlign: 'center',
+  },
+  statLabelWeb: {
+    fontSize: 12,
+    lineHeight: 16,
   },
 
   // ── SECTIONS ──
@@ -610,6 +620,9 @@ const s = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 16,
   },
+  stylesGridDesktop: {
+    width: '100%',
+  },
   styleCard: {
     backgroundColor: COLORS.bgElevated,
     borderWidth: 1.5,
@@ -625,6 +638,13 @@ const s = StyleSheet.create({
     flexBasis: 180,
     flexGrow: 0,
     paddingVertical: 16,
+  },
+  styleCardDesktop: {
+    flexBasis: 180,
+    flexGrow: 1,
+    flexShrink: 1,
+    minWidth: 180,
+    maxWidth: 220,
   },
   styleImage: {
     width: '100%',

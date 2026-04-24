@@ -281,7 +281,7 @@ const s = StyleSheet.create({
   heroLeftRow: { flex: 1 },
   heroRight: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
     minHeight: 620,
   },

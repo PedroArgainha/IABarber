@@ -394,7 +394,9 @@ const s = StyleSheet.create({
     maxWidth: MAX_WIDTH,
     width: '100%',
     marginHorizontal: 'auto' as any,
-    paddingHorizontal: 48,
+    // Igual ao container principal do site: isto faz as secções da página
+    // "Sobre nós" acabarem na mesma linha à direita.
+    paddingHorizontal: 24,
   },
 
   mobileInner: {
@@ -555,6 +557,7 @@ const s = StyleSheet.create({
 
   // ── Founder layout ────────────────────────────
   founderGrid: {
+    width: '100%',
     flexDirection: 'row',
     gap: 60,
     alignItems: 'flex-start',
@@ -685,6 +688,7 @@ const s = StyleSheet.create({
   },
 
   missionGrid: {
+    width: '100%',
     flexDirection: 'row',
     gap: 60,
     alignItems: 'flex-start',
@@ -756,6 +760,7 @@ const s = StyleSheet.create({
   },
 
   valuesGridWeb: {
+    width: '100%',
     flexDirection: 'row',
     gap: 20,
   },
@@ -805,6 +810,7 @@ const s = StyleSheet.create({
   },
 
   devGridWeb: {
+    width: '100%',
     flexDirection: 'row',
     gap: 20,
   },

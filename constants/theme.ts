@@ -58,8 +58,8 @@ export const STYLES = {
         "Transform the hair in this photo into a buzz cut: very short, even length all around, clean and masculine. Keep the face identical.",
     },
     {
-      id: "short_fringer",
-      name: "Short Fringer",
+      id: "short_fringe",
+      name: "Short Fringe",
       desc: "Jovem e descontraído",
       image: require("../assets/shortfringe.png"),
       prompt:

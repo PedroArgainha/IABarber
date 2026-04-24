@@ -65,6 +65,7 @@ export default function StylePicker() {
       </View>
 
       <ScrollView
+        style={[s.scrollView, isWeb && s.scrollViewWeb]}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[s.scrollContent, isWeb && (isMd ? s.scrollContentWebMobile : s.scrollContentWeb)]}
       >
@@ -164,7 +165,7 @@ export default function StylePicker() {
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: COLORS.bg },
   webOuter: {
-    minHeight: '100vh' as any,
+    height: '100vh' as any,
     paddingTop: 64,
     maxWidth: 680,
     width: '100%',
@@ -192,9 +193,11 @@ const s = StyleSheet.create({
   stepLineDone: { backgroundColor: COLORS.accentBorder },
   stepLabel: { fontFamily: FONTS.body, fontSize: 12, color: COLORS.textTertiary },
 
+  scrollView: { flex: 1 },
+  scrollViewWeb: { width: '100%' },
   scrollContent: { paddingHorizontal: 24, paddingBottom: 24 },
-  scrollContentWeb: { paddingHorizontal: 48, paddingBottom: 60 },
-  scrollContentWebMobile: { paddingHorizontal: 24, paddingBottom: 60 },
+  scrollContentWeb: { paddingHorizontal: 48, paddingBottom: 90 },
+  scrollContentWebMobile: { paddingHorizontal: 24, paddingBottom: 90 },
 
   title: {
     fontFamily: FONTS.display, fontSize: 32,

@@ -1,6 +1,4 @@
-import { ExpoConfig } from "expo/config";
-
-const config: ExpoConfig = {
+const config = {
   name: "777 HairVision",
   slug: "hairvision-777",
   version: "1.0.0",

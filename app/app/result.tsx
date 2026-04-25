@@ -25,7 +25,8 @@ export default function Result() {
       const photo = await AsyncStorage.getItem("photoBase64");
       const result = await AsyncStorage.getItem("resultImageUrl");
       const name = await AsyncStorage.getItem("selectedStyleName");
-      if (photo) setOriginalUri(`data:image/jpeg;base64,${photo}`);
+      const photoMimeType = await AsyncStorage.getItem("photoMimeType");
+      if (photo) setOriginalUri(`data:${photoMimeType || "image/jpeg"};base64,${photo}`);
       if (result && result !== "demo") setResultUrl(result);
       if (name) setStyleName(name);
       Animated.parallel([
@@ -42,7 +43,7 @@ export default function Result() {
   };
 
   const handleRetry = async () => {
-    await AsyncStorage.removeItem("resultImageUrl");
+    await AsyncStorage.multiRemove(["resultImageUrl", "photoBase64", "photoMimeType"]);
     router.replace("/app");
   };
 

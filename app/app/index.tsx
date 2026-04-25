@@ -42,6 +42,7 @@ export default function AppUpload() {
       setImage(result.assets[0].uri);
       if (result.assets[0].base64) {
         await AsyncStorage.setItem("photoBase64", result.assets[0].base64);
+        await AsyncStorage.setItem("photoMimeType", result.assets[0].mimeType || "image/jpeg");
       }
     }
   };
@@ -60,6 +61,7 @@ export default function AppUpload() {
       setImage(result.assets[0].uri);
       if (result.assets[0].base64) {
         await AsyncStorage.setItem("photoBase64", result.assets[0].base64);
+        await AsyncStorage.setItem("photoMimeType", result.assets[0].mimeType || "image/jpeg");
       }
     }
   };
@@ -96,19 +98,19 @@ export default function AppUpload() {
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={[s.uploadZone, isWeb && !isMd && s.uploadZoneWeb]}>
-              <View style={[s.uploadIcon, isWeb && !isMd && s.uploadIconWeb]}>
+            <View style={s.uploadZone}>
+              <View style={s.uploadIcon}>
                 <Text style={{ fontSize: 32 }}>📸</Text>
               </View>
-              <Text style={[s.uploadLabel, isWeb && !isMd && s.uploadLabelWeb]}>Envia a tua foto</Text>
-              <Text style={[s.uploadHint, isWeb && !isMd && s.uploadHintWeb]}>JPG ou PNG • Máx. 10MB</Text>
+              <Text style={s.uploadLabel}>Envia a tua foto</Text>
+              <Text style={s.uploadHint}>JPG ou PNG • Máx. 10MB</Text>
 
               <View style={s.uploadBtns}>
-                <TouchableOpacity style={[s.uploadBtn, isWeb && !isMd && s.uploadBtnWeb]} onPress={pickImage} activeOpacity={0.8}>
+                <TouchableOpacity style={s.uploadBtn} onPress={pickImage} activeOpacity={0.8}>
                   <Text style={s.uploadBtnText}>🖼️  Galeria</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[s.uploadBtn, isWeb && !isMd && s.uploadBtnWeb, s.uploadBtnAccent]}
+                  style={[s.uploadBtn, s.uploadBtnAccent]}
                   onPress={takePhoto}
                   activeOpacity={0.8}
                 >
@@ -119,11 +121,11 @@ export default function AppUpload() {
           )}
 
           {/* Tips */}
-          <View style={[s.tipsRow, isWeb && !isMd && s.tipsRowWeb]}>
+          <View style={s.tipsRow}>
             {TIPS.map((tip, i) => (
-              <View key={i} style={[s.tipCard, isWeb && !isMd && s.tipCardWeb]}>
-                <Text style={[s.tipIcon, isWeb && !isMd && s.tipIconWeb]}>{tip.icon}</Text>
-                <Text style={[s.tipLabel, isWeb && !isMd && s.tipLabelWeb]}>{tip.label}</Text>
+              <View key={i} style={s.tipCard}>
+                <Text style={s.tipIcon}>{tip.icon}</Text>
+                <Text style={s.tipLabel}>{tip.label}</Text>
               </View>
             ))}
           </View>
@@ -136,7 +138,7 @@ export default function AppUpload() {
           {isWeb && (
             <View style={s.webFooter}>
               <TouchableOpacity
-                style={[s.nextBtn, isWeb && !isMd && s.nextBtnWeb, !image && s.nextBtnDisabled]}
+                style={[s.nextBtn, !image && s.nextBtnDisabled]}
                 onPress={() => image && router.push("/app/style")}
                 activeOpacity={image ? 0.85 : 1}
               >
@@ -153,7 +155,7 @@ export default function AppUpload() {
       {!isWeb && (
         <View style={s.footer}>
           <TouchableOpacity
-            style={[s.nextBtn, isWeb && !isMd && s.nextBtnWeb, !image && s.nextBtnDisabled]}
+            style={[s.nextBtn, !image && s.nextBtnDisabled]}
             onPress={() => image && router.push("/app/style")}
             activeOpacity={image ? 0.85 : 1}
           >
@@ -252,32 +254,17 @@ const s = StyleSheet.create({
     backgroundColor: COLORS.accentDim,
     marginBottom: 20,
   },
-  uploadZoneWeb: {
-    minHeight: 390,
-    justifyContent: "center",
-    paddingVertical: 70,
-    paddingHorizontal: 44,
-    marginBottom: 30,
-  },
   uploadIcon: {
     width: 64, height: 64, borderRadius: 32,
     backgroundColor: "rgba(181,245,66,0.1)",
     alignItems: "center", justifyContent: "center",
     marginBottom: 12,
   },
-  uploadIconWeb: {
-    width: 84,
-    height: 84,
-    borderRadius: 42,
-    marginBottom: 20,
-  },
   uploadLabel: {
     fontFamily: FONTS.displayBold,
     fontSize: 16, color: COLORS.white, marginBottom: 4,
   },
-  uploadLabelWeb: { fontSize: 19, marginBottom: 8 },
   uploadHint: { fontFamily: FONTS.body, fontSize: 12, color: COLORS.textTertiary, marginBottom: 20 },
-  uploadHintWeb: { fontSize: 13, marginBottom: 36 },
   uploadBtns: { flexDirection: "row", gap: 10, width: "100%" },
   uploadBtn: {
     flex: 1, paddingVertical: 13, borderRadius: RADIUS.md,
@@ -285,7 +272,6 @@ const s = StyleSheet.create({
     backgroundColor: COLORS.bgElevated,
     borderWidth: 0.5, borderColor: COLORS.border,
   },
-  uploadBtnWeb: { paddingVertical: 19 },
   uploadBtnAccent: { backgroundColor: COLORS.accent },
   uploadBtnText: { fontFamily: FONTS.bodyMedium, fontSize: 14, color: COLORS.textSecondary },
   uploadBtnTextAccent: { color: "#0a0a0a" },
@@ -306,21 +292,13 @@ const s = StyleSheet.create({
   changeBtnText: { fontFamily: FONTS.bodyMedium, fontSize: 13, color: COLORS.textSecondary },
 
   tipsRow: { flexDirection: "row", gap: 10, marginBottom: 16 },
-  tipsRowWeb: { gap: 12, marginBottom: 24 },
   tipCard: {
     flex: 1, backgroundColor: COLORS.bgCard,
     borderWidth: 0.5, borderColor: COLORS.border,
     borderRadius: RADIUS.md, padding: 12, alignItems: "center",
   },
-  tipCardWeb: {
-    minHeight: 110,
-    justifyContent: "center",
-    paddingVertical: 22,
-  },
   tipIcon: { fontSize: 18, marginBottom: 4 },
-  tipIconWeb: { fontSize: 24, marginBottom: 8 },
   tipLabel: { fontFamily: FONTS.bodyMedium, fontSize: 11, color: COLORS.textSecondary, textAlign: "center" },
-  tipLabelWeb: { fontSize: 12 },
 
   privacyNote: {
     fontFamily: FONTS.body, fontSize: 12,
@@ -328,13 +306,12 @@ const s = StyleSheet.create({
     marginBottom: 8,
   },
 
-  webFooter: { marginTop: 14, marginBottom: 8 },
+  webFooter: { marginTop: 20, marginBottom: 8 },
   footer: { paddingHorizontal: 24, paddingBottom: 24 },
   nextBtn: {
     backgroundColor: COLORS.accent,
     paddingVertical: 17, borderRadius: RADIUS.md, alignItems: "center",
   },
-  nextBtnWeb: { paddingVertical: 23 },
   nextBtnDisabled: { backgroundColor: COLORS.bgElevated },
   nextBtnText: { fontFamily: FONTS.displayBold, fontSize: 16, color: "#0a0a0a" },
   nextBtnTextDisabled: { color: COLORS.textTertiary },

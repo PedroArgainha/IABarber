@@ -77,7 +77,13 @@ export default function Landing() {
                 <Text style={s.badgeText}>O teu novo look em segundos · Grátis para testar</Text>
               </View>
 
-              <Text style={[s.headline, isWeb && (isTablet ? s.headlineTablet : s.headlineWeb)]}>
+              <Text
+                style={[
+                  s.headline,
+                  isWeb && isMd && s.headlineMobileWeb,
+                  isWeb && !isMd && (isTablet ? s.headlineTablet : s.headlineWeb),
+                ]}
+              >
                 Vê o teu{'\n'}
                 <Text style={s.headlineAccent}>novo corte</Text>
                 {'\n'}antes de cortar.
@@ -142,11 +148,25 @@ export default function Landing() {
 
         {/* ── STATS ── */}
         <View style={s.statsBar}>
-          <View style={[s.statsInner, isWeb && s.webInner]}>
+          <View style={[s.statsInner, isWeb && s.webInner, isWeb && isMd && s.statsInnerMobileWeb]}>
             {STATS.map((st, i) => (
-              <View key={i} style={[s.statItem, i < STATS.length - 1 && s.statBorder]}>
-                <Text style={[s.statNum, isWeb && s.statNumWeb]}>{st.num}</Text>
-                <Text style={[s.statLabel, isWeb && s.statLabelWeb]}>{st.label}</Text>
+              <View
+                key={i}
+                style={[
+                  s.statItem,
+                  isWeb && isMd && s.statItemMobileWeb,
+                  i < STATS.length - 1 && s.statBorder,
+                  isWeb && isMd && s.statBorderMobileReset,
+                  isWeb && isMd && i % 2 === 0 && s.statBorderMobileRight,
+                  isWeb && isMd && i < 2 && s.statBorderMobileBottom,
+                ]}
+              >
+                <Text style={[s.statNum, isWeb && s.statNumWeb, isWeb && isMd && s.statNumMobileWeb]}>
+                  {st.num}
+                </Text>
+                <Text style={[s.statLabel, isWeb && s.statLabelWeb, isWeb && isMd && s.statLabelMobileWeb]}>
+                  {st.label}
+                </Text>
               </View>
             ))}
           </View>
@@ -319,6 +339,12 @@ const s = StyleSheet.create({
     letterSpacing: -2.5,
     marginBottom: 20,
   },
+  headlineMobileWeb: {
+    fontSize: 36,
+    lineHeight: 43,
+    letterSpacing: -1.2,
+    marginBottom: 16,
+  },
   headlineAccent: { color: COLORS.accent },
 
   sub: {
@@ -486,6 +512,10 @@ const s = StyleSheet.create({
   statsInner: {
     flexDirection: 'row',
   },
+  statsInnerMobileWeb: {
+    flexWrap: 'wrap',
+    paddingHorizontal: 0,
+  },
   webInner: {
     maxWidth: MAX_WIDTH,
     width: '100%',
@@ -501,9 +531,30 @@ const s = StyleSheet.create({
     paddingVertical: 22,
     paddingHorizontal: 4,
   },
+  statItemMobileWeb: {
+    flexBasis: '50%' as any,
+    width: '50%' as any,
+    flexGrow: 0,
+    flexShrink: 0,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+    minHeight: 88,
+    justifyContent: 'center',
+  },
   statBorder: {
     borderRightWidth: 0.5,
     borderRightColor: COLORS.border,
+  },
+  statBorderMobileReset: {
+    borderRightWidth: 0,
+  },
+  statBorderMobileRight: {
+    borderRightWidth: 0.5,
+    borderRightColor: COLORS.border,
+  },
+  statBorderMobileBottom: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   statNum: {
     fontFamily: FONTS.display,
@@ -517,6 +568,10 @@ const s = StyleSheet.create({
     fontSize: 26,
     lineHeight: 30,
   },
+  statNumMobileWeb: {
+    fontSize: 18,
+    lineHeight: 22,
+  },
   statLabel: {
     fontFamily: FONTS.body,
     fontSize: 11,
@@ -528,6 +583,11 @@ const s = StyleSheet.create({
   statLabelWeb: {
     fontSize: 12,
     lineHeight: 16,
+  },
+  statLabelMobileWeb: {
+    fontSize: 11,
+    lineHeight: 15,
+    maxWidth: 150,
   },
 
   // ── SECTIONS ──

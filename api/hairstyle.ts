@@ -11,10 +11,11 @@ export const config = {
 const REPLICATE_API_BASE = "https://api.replicate.com/v1";
 const DEFAULT_MODEL = process.env.REPLICATE_MODEL || "black-forest-labs/flux-kontext-max";
 
-function withCors(res: any) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+function withCors(req: any, res: any) {
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 }
 
 function buildPrompt(styleName: string, basePrompt: string) {
@@ -52,7 +53,7 @@ function getCreatePredictionRequest(modelRef: string, input: Record<string, unkn
 }
 
 export default async function handler(req: any, res: any) {
-  withCors(res);
+  withCors(req, res);
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();

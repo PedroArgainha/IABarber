@@ -6,7 +6,7 @@ import { DMSans_400Regular, DMSans_500Medium } from '@expo-google-fonts/dm-sans'
 import * as SplashScreen from 'expo-splash-screen';
 import { View, Platform } from 'react-native';
 import { COLORS } from '../constants/theme';
-import AccessGate from "../components/AccessGate";
+import AccessGate from '../components/AccessGate';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,7 +20,7 @@ export default function RootLayout() {
   if (!fontsLoaded) return <View style={{ flex: 1, backgroundColor: COLORS.bg }} />;
 
   return (
-    <>
+    <AccessGate>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -36,6 +36,6 @@ export default function RootLayout() {
         <Stack.Screen name="app/loading" />
         <Stack.Screen name="app/result" />
       </Stack>
-    </>
+    </AccessGate>
   );
 }

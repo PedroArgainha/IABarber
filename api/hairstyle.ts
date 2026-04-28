@@ -1,3 +1,5 @@
+import { requireAccess } from "./_access";
+
 export const config = {
   api: {
     bodyParser: {
@@ -54,6 +56,10 @@ export default async function handler(req: any, res: any) {
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
+  }
+
+  if (!requireAccess(req, res)) {
+  return;
   }
 
   if (req.method !== "POST") {

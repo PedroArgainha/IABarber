@@ -51,6 +51,10 @@ export default async function handler(req: any, res: any) {
     return res.status(200).end();
   }
 
+  if (!requireAccess(req, res)) {
+  return;
+  }
+
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método não permitido." });
   }

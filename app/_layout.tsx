@@ -6,6 +6,7 @@ import { DMSans_400Regular, DMSans_500Medium } from '@expo-google-fonts/dm-sans'
 import * as SplashScreen from 'expo-splash-screen';
 import { View, Platform } from 'react-native';
 import { COLORS } from '../constants/theme';
+import AccessGate from "../components/AccessGate";
 
 SplashScreen.preventAutoHideAsync();
 

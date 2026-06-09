@@ -58,16 +58,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#0a0a0a" },
-      { title: "777 HairVision — Vê o teu novo corte antes de cortar" },
-      { name: "description", content: "Envia uma selfie, escolhe o estilo e a nossa IA mostra-te como ficas em segundos. Sem surpresas na cadeira do barbeiro." },
-      { property: "og:title", content: "777 HairVision" },
-      { property: "og:description", content: "Simula o teu próximo corte de cabelo com IA. Grátis." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
+	  { charSet: "utf-8" },
+	  { name: "viewport", content: "width=device-width, initial-scale=1" },
+	  { name: "theme-color", content: "#0a0a0a" },
+	  { title: "777 HairVision — Vê o teu novo corte antes de cortar" },
+	  { name: "description", content: "Envia uma selfie, escolhe o estilo e a nossa IA mostra-te como ficas em segundos." },
+
+	  { property: "og:title", content: "777 HairVision" },
+	  { property: "og:description", content: "Simula o teu próximo corte de cabelo com IA. Grátis." },
+	  { property: "og:type", content: "website" },
+	  { property: "og:image", content: "https://777hairvision.vercel.app/og-image.png" },
+	  { property: "og:url", content: "https://777hairvision.vercel.app" },
+
+	  { name: "twitter:card", content: "summary_large_image" },
+	  { name: "twitter:image", content: "https://777hairvision.vercel.app/og-image.png" },
+	],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
